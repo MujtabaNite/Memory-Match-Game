@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Card Game</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="../script/style.css">
+    
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <h1>Memory Match Game</h1>
+      <div class="controls">
+        <div class="stats">
+          <span>Time: <strong id="time">0</strong>s</span>
+          <span>Moves: <strong id="moves">0</strong></span>
+        </div>
+        <div class="buttons">
+          <button id="restart">Restart</button>
+          <button id="mute">🔊</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="game-container" id="game"></div>
+    </main>
+
+    <footer>
+      <p class="credit">Built with HTML5 · CSS3 · JavaScript</p>
+    </footer>
+  </div>
+
+  <script src="../script/memory.js"></script>
+</body>
+</html>
+

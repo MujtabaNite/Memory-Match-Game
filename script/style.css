@@ -1,0 +1,184 @@
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html,body { height:100%; margin:0; padding:0; font-family: Inter,Arial,Helvetica,sans-serif; }
+body {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg,#0f172a 0%, #0b1220 50%, #071023 100%);
+  color:#e6eef8;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+
+/* animated floating blobs in background */
+.page-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  padding: 36px;
+  z-index: 2;
+}
+
+.page-wrap::before,
+.page-wrap::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.25;
+  z-index: 1;
+  pointer-events:none;
+}
+
+.page-wrap::before {
+  width: 420px; height:420px; left: -80px; top: -120px;
+  background: radial-gradient(circle at 40% 40%, #7c3aed, #3b82f6);
+  animation: floatA 9s ease-in-out infinite;
+}
+
+.page-wrap::after {
+  width: 520px; height:520px; right: -120px; bottom: -100px;
+  background: radial-gradient(circle at 60% 60%, #06b6d4, #10b981);
+  animation: floatB 11s ease-in-out infinite;
+}
+
+@keyframes floatA {
+  0% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(18px) translateX(12px) scale(1.03); }
+  100% { transform: translateY(0) translateX(0) scale(1); }
+}
+@keyframes floatB {
+  0% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(-18px) translateX(-14px) scale(0.98); }
+  100% { transform: translateY(0) translateX(0) scale(1); }
+}
+
+/* header */
+header {
+  text-align:center;
+  margin-bottom:18px;
+  position: relative;
+  z-index: 3;
+}
+h1 { margin: 0 0 12px 0; font-size: 34px; letter-spacing: -0.5px; }
+
+/* controls row */
+.controls {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content: center;
+  flex-wrap:wrap;
+}
+.stats { display:flex; gap:16px; font-size:16px; align-items:center; }
+.buttons { display:flex; gap:10px; align-items:center; }
+
+button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  backdrop-filter: blur(6px);
+}
+button:hover { transform: translateY(-2px); transition: .12s; }
+
+/* game grid */
+main { display:flex; justify-content:center; z-index:3; }
+.game-container {
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  gap: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  box-shadow: 0 8px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* card */
+.card {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+  user-select:none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.card .inner {
+  position: absolute;
+  inset:0;
+  border-radius:12px;
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.4,.2,.2,1);
+  box-shadow: 0 6px 14px rgba(2,6,23,0.5);
+}
+.card .face {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  border-radius:12px;
+  backface-visibility: hidden;
+}
+.card .front {
+  background: linear-gradient(180deg,#111827,#0f1724);
+  color: transparent;
+  transform: rotateY(0deg);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.card .back {
+  background: linear-gradient(180deg,#ffffff,#f1f5f9);
+  color: #0b1220;
+  transform: rotateY(180deg);
+  font-size:46px;
+}
+
+/* Hover effect only for cards not flipped or matched */
+.card:not(.flipped):not(.matched):hover .front {
+  background: #005eff !important;     /* pure blue */
+  transform: scale(1.07);
+  box-shadow: 0 0 18px rgba(0, 100, 255, 0.9);
+}
+.card:not(.flipped):not(.matched):hover {
+  transform: scale(1.07);
+}
+
+/* Flipped cards */
+.card.flipped .inner,
+.card.matched .inner {
+  transform: rotateY(180deg);
+}
+
+/* Show back face (emoji) for flipped/matched */
+.card.flipped .back,
+.card.matched .back {
+  display: flex;
+  background: linear-gradient(180deg,#ffffff,#f1f5f9);
+  color: #0b1220;
+  font-size:46px;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Optional: make matched cards slightly brighter */
+.card.matched .back {
+  filter: brightness(1.1);
+}
+
+/* small footer */
+footer { margin-top:18px; text-align:center; font-size:12px; opacity:0.8; z-index:3; color:#cfe9ff; }
+
+/* responsive */
+@media (max-width:600px) {
+  .game-container { grid-template-columns: repeat(4, 74px); width: 340px; gap:10px; }
+  .card { width:74px; height:74px; }
+  .card .face { font-size:28px; }
+}
