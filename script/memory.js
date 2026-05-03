@@ -11,6 +11,14 @@ const timeText = document.getElementById("time");
 const movesText = document.getElementById("moves");
 const restartBtn = document.getElementById("restart");
 const muteBtn = document.getElementById("mute");
+const bestText = document.getElementById("best");
+
+// Modal elements
+const modal = document.getElementById("modal");
+const finalTimeText = document.getElementById("final-time");
+const finalMovesText = document.getElementById("final-moves");
+const newBestText = document.getElementById("new-best");
+const modalRestartBtn = document.getElementById("modal-restart");
 
 const emojis = ["🐼","👀","🍒","🍇","🫠","🥺","🐍","🤨"]; // 8 pairs -> 16 cards
 let cards = [];
@@ -153,14 +161,7 @@ function checkMatch() {
 
     if (matchedCount === cards.length) {
       stopTimer();
-      setTimeout(() => {
-        // simple win overlay or alert
-        if (!isMuted) {
-          // little celebratory replay
-          playSound(audioMatch);
-        }
-        alert(`🎉 Congratulations! You finished in ${time} seconds and ${moves} moves.`);
-      }, 400);
+      showWinModal();
     }
   } else {
     // not match
@@ -171,6 +172,30 @@ function checkMatch() {
       flippedCards = [];
     }, 700);
   }
+}
+
+function showWinModal() {
+  finalTimeText.textContent = time;
+  finalMovesText.textContent = moves;
+
+  const currentBest = localStorage.getItem("memory-best-time");
+  if (!currentBest || time < parseInt(currentBest)) {
+    localStorage.setItem("memory-best-time", time);
+    newBestText.style.display = "block";
+    updateBestDisplay();
+  } else {
+    newBestText.style.display = "none";
+  }
+
+  setTimeout(() => {
+    modal.classList.add("active");
+    if (!isMuted) playSound(audioMatch);
+  }, 500);
+}
+
+function updateBestDisplay() {
+  const currentBest = localStorage.getItem("memory-best-time");
+  bestText.textContent = currentBest || "--";
 }
 
 // restart logic
@@ -209,5 +234,11 @@ restartBtn.addEventListener("click", () => {
 
 muteBtn.addEventListener("click", toggleMute);
 
-// initialize board (no autoplay music until user interacts)
+modalRestartBtn.addEventListener("click", () => {
+  modal.classList.remove("active");
+  startGame();
+});
+
+// initialize
+updateBestDisplay();
 buildBoard();
