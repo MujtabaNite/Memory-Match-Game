@@ -31,10 +31,10 @@ let musicStarted = false;
 let isMuted = false;
 
 // audio objects (paths relative to memory.html)
-const audioFlip = new Audio("../Audios_Videos/flip.mp3");
-const audioMatch = new Audio("../Audios_Videos/match.mp3");
-const audioWrong = new Audio("../Audios_Videos/wrong.mp3");
-const audioBg = new Audio("../Audios_Videos/bg-music.mp3");
+const audioFlip = new Audio("Audios_Videos/flip.mp3");
+const audioMatch = new Audio("Audios_Videos/match.mp3");
+const audioWrong = new Audio("Audios_Videos/wrong.mp3");
+const audioBg = new Audio("Audios_Videos/bg-music.mp3");
 audioBg.loop = true;
 audioBg.volume = 0.35;
 
