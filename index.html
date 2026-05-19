@@ -3,51 +3,83 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Memory Card Game</title>
+  <title>Premium Memory Match</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="script/style.css">
-
 </head>
 
 <body>
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <div class="page-wrap">
-    <header>
-      <h1>Memory Match Game</h1>
+    <header class="glass-panel">
+      <h1>Memory Match</h1>
       <div class="controls">
         <div class="stats">
-          <span>Time: <strong id="time">0</strong>s</span>
-          <span>Moves: <strong id="moves">0</strong></span>
-          <span>Best: <strong id="best">--</strong>s</span>
+          <div class="stat-badge">
+            <span class="label">Time</span>
+            <div><strong id="time">0</strong><span class="unit">s</span></div>
+          </div>
+          <div class="stat-badge">
+            <span class="label">Moves</span>
+            <div><strong id="moves">0</strong></div>
+          </div>
+          <div class="stat-badge">
+            <span class="label">Best</span>
+            <div><strong id="best">--</strong><span class="unit">s</span></div>
+          </div>
         </div>
         <div class="buttons">
-          <button id="restart">Restart</button>
-          <button id="mute">🔊</button>
+          <button id="restart" class="btn primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            Restart
+          </button>
+          <button id="mute" class="btn icon-btn">🔊</button>
         </div>
       </div>
     </header>
 
     <main>
-      <div class="game-container" id="game"></div>
+      <div class="game-container glass-panel" id="game"></div>
     </main>
 
     <footer>
-      <p class="credit">Built with HTML5 · CSS3 · JavaScript</p>
+      <p class="credit">BY MUHAMMAD MUJTABA</p>
     </footer>
 
-
     <div class="modal-overlay" id="modal">
-      <div class="modal-content">
-        <h2>Victory! 🎉</h2>
+      <div class="modal-content glass-panel-heavy">
+        <div class="modal-icon">🎉</div>
+        <h2>Exceptional!</h2>
         <div class="modal-stats">
-          <p>You finished in <strong><span id="final-time">0</span>s</strong></p>
-          <p>Moves taken: <strong><span id="final-moves">0</span></strong></p>
-          <p id="new-best" style="display:none; color:#10b981; font-weight:bold; margin-top:10px;">New Personal Best! 🏆
-          </p>
+          <div class="modal-stat-item">
+            <span class="modal-stat-label">Time</span>
+            <span class="modal-stat-val"><span id="final-time">0</span>s</span>
+          </div>
+          <div class="modal-stat-item">
+            <span class="modal-stat-label">Moves</span>
+            <span class="modal-stat-val" id="final-moves">0</span>
+          </div>
         </div>
-        <button id="modal-restart">Play Again</button>
+        <div id="new-best" class="new-best-badge" style="display:none;">
+          🏆 New Personal Best!
+        </div>
+        <button id="modal-restart" class="btn primary large">Play Again</button>
       </div>
     </div>
   </div>
+
+  <!-- Particle Container -->
+  <div id="particles-container"></div>
 
   <script src="script/memory.js"></script>
 </body>
